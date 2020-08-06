@@ -1,24 +1,26 @@
 from room import Room
 from player import Player
-# Declare all the rooms
+from item import Item
+
+# Declare all the rooms with thier items
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", Item("Sword", "you know")),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", Item("Spear", "long thing with pointy end")),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""", Item("CrossBow", "not worth it - go for the gun")),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""", Item("Gun", "good choice - but do you have bullets?")),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""", Item("Gold", "lots of it")),
 }
 
 
@@ -32,6 +34,7 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
 
 #
 # Main
@@ -64,6 +67,7 @@ while True:
     # * Prints the current description  and location(the textwrap module might be useful here).
     print('\n')
     print(player.location)
+
     command = input("\nCommand: ").strip().lower().split()
     print(command[0])
 # if the first letter is get and the last word is item name
