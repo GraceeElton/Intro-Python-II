@@ -1,5 +1,5 @@
 from room import Room
-
+from player import Player
 # Declare all the rooms
 
 room = {
@@ -38,14 +38,55 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player(room['outside'])
 
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
+
+def try_direction(player, direction):
+    # check the player's current location and see if there is
+    # a room in the specified direction
+    # if there is, move them there to that room
+    # otherwise, a print message saying "we can't go there" and
+    # not move the player
+    attribute = direction + '_to'
+    # python has a handy method called hasattr
+    # which allows us to check if a class has an attribute
+    if hasattr(player.location, attribute):
+        # this is a valid direction
+        # use getattr to fetch the value associated with the attribute
+        # update our player's location with the fetched room
+        player.location = getattr(player.location, attribute)
+    else:
+        print('\n')
+        print("There is nothing in that direction!")
+
+
+while True:
+    # * Prints the current description  and location(the textwrap module might be useful here).
+    print('\n')
+    print(player.location)
+    command = input("\nCommand: ").strip().lower().split()
+    print(command[0])
+# if the first letter is get and the last word is item name
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
+
 # If the user enters "q", quit the game.
+    command2 = command[0]
+    first_word = command2[0]
+    if first_word == 'q':
+        break
+    elif first_word == 'n':
+        # move to the north
+        try_direction(player, first_word)
+    elif first_word == 's':
+        # move to the south
+        try_direction(player, first_word)
+    elif first_word == 'w':
+        # move to the west
+        try_direction(player, first_word)
+    elif first_word == 'e':
+        # move to the east
+        try_direction(player, first_word)
+    else:
+        print(f"That is not a correct direction")
